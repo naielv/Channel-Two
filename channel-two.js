@@ -125,7 +125,7 @@ jQuery( function ( $ ) {
 		queueNextProgramming();
 
 		// Remove this button, as it won't be needed again.
-		$( this ).remove();
+		$( '#start' ).remove();
 	} );
 
 	/**
