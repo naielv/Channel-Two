@@ -1,0 +1,13 @@
+version: '2'
+
+volumes:
+  settings:                          # Only required if using PERSISTENT flag (see below)
+
+services:
+
+  browser:
+    image: bh.cr/balenalabs/browser-armv7hf # where <arch> is one of aarch64, arm32 or amd64
+    privileged: true # required for UDEV to find plugged in peripherals such as a USB mouse
+    network_mode: host
+    volumes:
+      - 'settings:/data' # Only required if using PERSISTENT flag (see below)
