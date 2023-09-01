@@ -65,72 +65,73 @@ jQuery( function ( $ ) {
 	 * Webpages can't autoplay video or go full-screen without some interaction from the user,
 	 * so require a button to be clicked to kick things off.
 	 */
+	
 	$( '#start' ).on( 'click', function () {
 		if ( logLevel >= 2 ) console.log( "#start.click()" );
-
+		
 		// Periodically re-fetch the programming schedule in case new content has been added (or changed, or removed, or...)
 		setInterval( refreshProgramming, 5 * 60 * 1000 );
-
-		if ( 'requestFullscreen' in document.documentElement ) {
-			document.documentElement.requestFullscreen();
-		} else if ( 'webkitRequestFullScreen' in document.documentElement ) {
-			document.documentElement.webkitRequestFullScreen();
-		} else if ( 'mozRequestFullScreen' in document.documentElement ) {
-			document.documentElement.mozRequestFullScreen();
-		}
-
+		
+		//if ( 'requestFullscreen' in document.documentElement ) {
+		//	document.documentElement.requestFullscreen();
+		//} else if ( 'webkitRequestFullScreen' in document.documentElement ) {
+		//	document.documentElement.webkitRequestFullScreen();
+		//} else if ( 'mozRequestFullScreen' in document.documentElement ) {
+		//	document.documentElement.mozRequestFullScreen();
+		//}
+		
 		if ( logLevel >= 2 ) console.log( "Looking for content that should be playing." );
-
+		
 		// When the app is first loaded, see if there's a program we should be playing already, and
 		// if so, begin playback at the appropriate position.
 		let minutesAgo = 0;
 		let now = new Date();
-
+		
 		timeLoop : while ( minutesAgo < ( 24 * 60 ) ) {
 			if ( logLevel >= 3 ) console.log( "Checking " + minutesAgo + " minutes ago" );
-
+			
 			let adjustedTime = new Date( now.valueOf() - ( minutesAgo * 60 * 1000 ) );
-
+			
 			for ( let cron in programming.schedule ) {
 				if ( cron.indexOf( '* ' ) === 0 ) {
 					if ( logLevel >= 3 ) console.log( "Skipping cron " + cron );
-
+					
 					// Skip anything that is set as the backup for all the time. If there's nothing
 					// that's supposed to be playing now, it will be found later anyway.
 					continue;
 				}
-
+				
 				if ( Cron.timeMatchesCron( adjustedTime, cron ) ) {
 					if ( logLevel >= 2 ) console.log( "Found matching cron: " + cron, programming.schedule[cron] );
-
+					
 					// Confirm there's content long enough that it would still be playing.
 					let nextContent = getNextContentFromCron( cron );
-
+					
 					if ( logLevel >= 2 ) console.log( nextContent + " would have played." );
-
+					
 					// It doesn't matter if the file is long enough to reach the given duration.
 					// If it's not, it will end immediately and the 'ended' event will kick in.
 					programmingQueue.push( {
 						src: nextContent + '#t=' + ( ( minutesAgo * 60 ) + now.getSeconds() ),
 						cron : cron
 					} );
-
+					
 					break timeLoop;
 				}
 			}
-
+			
 			minutesAgo++;
 		}
-
+		
 		queueNextProgramming();
-
+		
 		// Remove this button, as it won't be needed again.
-		$( this ).remove();
+		$( "#start" ).remove();
 	} );
-
+	
 	/**
 	 * For debugging, when the screen is clicked, fast-forward the current program to its end.
-	 */
+	*/
 	$( '#overlay' ).on( 'click', function () {
 		if ( logLevel >= 2 ) console.log( "#overlay.click()" );
 
@@ -1261,4 +1262,7 @@ jQuery( function ( $ ) {
 			break;
 		}
 	} );
+	$(function () {
+		$('#start').click();
+	});
 } );
