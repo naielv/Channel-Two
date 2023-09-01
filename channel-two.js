@@ -65,6 +65,9 @@ jQuery( function ( $ ) {
 	 * Webpages can't autoplay video or go full-screen without some interaction from the user,
 	 * so require a button to be clicked to kick things off.
 	 */
+	$( 'body' ).on( 'load', function () {
+		$( "#start" ).click()
+	});
 	$( '#start' ).on( 'click', function () {
 		if ( logLevel >= 2 ) console.log( "#start.click()" );
 
