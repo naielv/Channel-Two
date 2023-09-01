@@ -65,7 +65,7 @@ jQuery( function ( $ ) {
 	 * Webpages can't autoplay video or go full-screen without some interaction from the user,
 	 * so require a button to be clicked to kick things off.
 	 */
-	$( '#start' ).on( 'click', function () {
+	$( 'body' ).on( 'load', function () {
 		if ( logLevel >= 2 ) console.log( "#start.click()" );
 
 		// Periodically re-fetch the programming schedule in case new content has been added (or changed, or removed, or...)
