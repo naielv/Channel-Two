@@ -71,13 +71,13 @@ jQuery( function ( $ ) {
 		// Periodically re-fetch the programming schedule in case new content has been added (or changed, or removed, or...)
 		setInterval( refreshProgramming, 5 * 60 * 1000 );
 
-		if ( 'requestFullscreen' in document.documentElement ) {
-			document.documentElement.requestFullscreen();
-		} else if ( 'webkitRequestFullScreen' in document.documentElement ) {
-			document.documentElement.webkitRequestFullScreen();
-		} else if ( 'mozRequestFullScreen' in document.documentElement ) {
-			document.documentElement.mozRequestFullScreen();
-		}
+		//if ( 'requestFullscreen' in document.documentElement ) {
+		//	document.documentElement.requestFullscreen();
+		//} else if ( 'webkitRequestFullScreen' in document.documentElement ) {
+		//	document.documentElement.webkitRequestFullScreen();
+		//} else if ( 'mozRequestFullScreen' in document.documentElement ) {
+		//	document.documentElement.mozRequestFullScreen();
+		//}
 
 		if ( logLevel >= 2 ) console.log( "Looking for content that should be playing." );
 
